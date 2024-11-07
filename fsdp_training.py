@@ -24,6 +24,7 @@ def create_model(rank):
 def get_data_loader(rank, world_size, batch_size=2):
     dataset = load_dataset("wikitext", "wikitext-2-raw-v1", split="train")
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    tokenizer.pad_token = tokenizer.eos_token
 
     def tokenize_function(example):
         return tokenizer(example["text"], padding="max_length", truncation=True, max_length=128)
